@@ -1,0 +1,122 @@
+---
+const navLinks = [
+  { label: 'Projects', href: '/aina-foundry/projects' },
+  { label: 'About', href: '/aina-foundry/about' },
+  { label: 'Blog', href: 'https://purplemaia.org/blog', external: true },
+];
+
+const currentPath = Astro.url.pathname;
+---
+
+<header id="site-header" class="fixed top-0 left-0 right-0 z-50 transition-all duration-300">
+  <div class="container-site">
+    <nav class="flex items-center justify-between h-16">
+      <!-- Logo -->
+      <a href="/aina-foundry/" class="flex items-center gap-3 group">
+        <div class="w-8 h-8 relative">
+          <svg viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" class="w-full h-full">
+            <!-- Stylized 'A' with circuit/leaf motif -->
+            <polygon points="16,3 29,27 3,27" fill="none" stroke="#4ADE80" stroke-width="1.5"/>
+            <line x1="9" y1="20" x2="23" y2="20" stroke="#4ADE80" stroke-width="1.5"/>
+            <circle cx="16" cy="3" r="1.5" fill="#4ADE80"/>
+            <circle cx="3" cy="27" r="1.5" fill="#22C55E" opacity="0.6"/>
+            <circle cx="29" cy="27" r="1.5" fill="#22C55E" opacity="0.6"/>
+          </svg>
+        </div>
+        <div class="flex flex-col leading-none">
+          <span class="text-af-white font-bold text-sm tracking-wide group-hover:text-af-green transition-colors duration-200">
+            ʻĀina Foundry
+          </span>
+          <span class="font-mono text-[10px] text-af-gray tracking-wider">Purple Maiʻa</span>
+        </div>
+      </a>
+
+      <!-- Desktop nav -->
+      <div class="hidden md:flex items-center gap-1">
+        {navLinks.map(link => (
+          <a
+            href={link.href}
+            target={link.external ? '_blank' : undefined}
+            rel={link.external ? 'noopener noreferrer' : undefined}
+            class:list={[
+              'px-4 py-2 text-sm font-medium rounded-sm transition-all duration-200',
+              'hover:text-af-white hover:bg-af-border',
+              currentPath.startsWith(link.href) && !link.external
+                ? 'text-af-green'
+                : 'text-af-gray',
+            ]}
+          >
+            {link.label}
+            {link.external && (
+              <svg class="inline w-3 h-3 ml-1 opacity-60" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/>
+              </svg>
+            )}
+          </a>
+        ))}
+        <a href="/aina-foundry/projects" class="btn-primary ml-3">
+          View Projects
+        </a>
+      </div>
+
+      <!-- Mobile menu button -->
+      <button id="mobile-menu-btn" class="md:hidden p-2 text-af-gray hover:text-af-white transition-colors" aria-label="Toggle menu">
+        <svg id="menu-icon" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+        </svg>
+        <svg id="close-icon" class="w-5 h-5 hidden" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+        </svg>
+      </button>
+    </nav>
+  </div>
+
+  <!-- Mobile menu -->
+  <div id="mobile-menu" class="hidden md:hidden border-t border-af-border bg-af-surface/95 backdrop-blur-sm">
+    <div class="container-site py-4 flex flex-col gap-1">
+      {navLinks.map(link => (
+        <a
+          href={link.href}
+          target={link.external ? '_blank' : undefined}
+          rel={link.external ? 'noopener noreferrer' : undefined}
+          class="px-4 py-3 text-sm font-medium text-af-silver hover:text-af-white hover:bg-af-border rounded-sm transition-all duration-200"
+        >
+          {link.label}
+        </a>
+      ))}
+      <div class="pt-2">
+        <a href="/aina-foundry/projects" class="btn-primary w-full justify-center">
+          View Projects
+        </a>
+      </div>
+    </div>
+  </div>
+</header>
+
+<!-- Spacer for fixed header -->
+<div class="h-16"></div>
+
+<script>
+  const header = document.getElementById('site-header');
+  const mobileBtn = document.getElementById('mobile-menu-btn');
+  const mobileMenu = document.getElementById('mobile-menu');
+  const menuIcon = document.getElementById('menu-icon');
+  const closeIcon = document.getElementById('close-icon');
+
+  // Scroll behavior — add frosted glass effect on scroll
+  window.addEventListener('scroll', () => {
+    if (window.scrollY > 20) {
+      header?.classList.add('bg-af-black/80', 'backdrop-blur-md', 'border-b', 'border-af-border');
+    } else {
+      header?.classList.remove('bg-af-black/80', 'backdrop-blur-md', 'border-b', 'border-af-border');
+    }
+  });
+
+  // Mobile toggle
+  mobileBtn?.addEventListener('click', () => {
+    const isOpen = !mobileMenu?.classList.contains('hidden');
+    mobileMenu?.classList.toggle('hidden');
+    menuIcon?.classList.toggle('hidden', !isOpen);
+    closeIcon?.classList.toggle('hidden', isOpen);
+  });
+</script>
