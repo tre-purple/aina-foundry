@@ -11,30 +11,28 @@ const sorted = allProjects.sort((a, b) => {
 });
 
 const categories = [
-  { value: 'all', label: 'All Projects' },
-  { value: 'restoration', label: 'ʻĀina Restoration' },
-  { value: 'sensors', label: 'Sensors & Monitoring' },
-  { value: 'communications', label: 'Communications' },
-  { value: 'data', label: 'Data & AI' },
-  { value: 'education', label: 'Education' },
-  { value: 'health', label: 'Health' },
-  { value: 'infrastructure', label: 'Infrastructure' },
-  { value: 'other', label: 'Other' },
+  { value: 'all',                      label: 'All Projects' },
+  { value: 'place-based',              label: 'Place-Based Engineering' },
+  { value: 'agentic-governance',       label: 'Agentic Governance' },
+  { value: 'sustainable-ai',           label: 'Sustainable AI Infrastructure' },
+  { value: 'environmental-intelligence', label: 'Environmental Intelligence' },
 ];
 
 const statuses = [
-  { value: 'all', label: 'All Statuses' },
-  { value: 'active', label: 'Active' },
-  { value: 'prototype', label: 'Prototype' },
-  { value: 'venture', label: 'Venture' },
-  { value: 'research', label: 'Research' },
-  { value: 'completed', label: 'Completed' },
+  { value: 'all',           label: 'All Statuses' },
+  { value: 'initial-build', label: 'Initial Build' },
+  { value: 'testing',       label: 'Testing / QA' },
+  { value: 'active',        label: 'Active' },
+  { value: 'prototype',     label: 'Prototype' },
+  { value: 'venture',       label: 'Venture' },
+  { value: 'research',      label: 'Research' },
+  { value: 'completed',     label: 'Completed' },
 ];
 ---
 
 <BaseLayout
   title="Projects"
-  description="Explore the full portfolio of ʻĀina Foundry projects — from ʻāina restoration tools to sensors, communications, and community-driven technology."
+  description="Explore the full portfolio of ʻĀina Foundry projects — place-based engineering, agentic governance, sustainable AI infrastructure, and environmental intelligence."
 >
   <!-- Page Header -->
   <section class="relative border-b border-af-border py-20 overflow-hidden">

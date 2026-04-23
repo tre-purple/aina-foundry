@@ -6,8 +6,8 @@ const projectsCollection = defineCollection({
     title: z.string(),
     tagline: z.string(),
     description: z.string(),
-    status: z.enum(['active', 'prototype', 'venture', 'research', 'completed']),
-    category: z.enum(['restoration', 'sensors', 'communications', 'data', 'education', 'health', 'infrastructure', 'other']),
+    status: z.enum(['active', 'prototype', 'testing', 'initial-build', 'venture', 'research', 'completed']),
+    category: z.enum(['restoration', 'sensors', 'communications', 'data', 'education', 'health', 'infrastructure', 'place-based', 'agentic-governance', 'sustainable-ai', 'environmental-intelligence', 'other']),
     tags: z.array(z.string()),
     year: z.number(),
     coverImage: z.string().optional(),
@@ -18,6 +18,7 @@ const projectsCollection = defineCollection({
     links: z.array(z.object({
       label: z.string(),
       url: z.string(),
+      highlight: z.boolean().optional(),
     })).optional(),
     featured: z.boolean().default(false),
     order: z.number().default(99),
