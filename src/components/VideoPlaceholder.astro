@@ -25,7 +25,7 @@ const { title } = Astro.props;
   <!-- Play button ring -->
   <div class="relative z-10 flex flex-col items-center gap-3">
     <div class="w-16 h-16 rounded-full border border-af-blue/30 bg-af-blue/10 flex items-center justify-center">
-      <svg class="w-7 h-7 text-af-blue opacity-50 translate-x-0.5" fill="currentColor" viewBox="0 0 24 24">
+      <svg aria-hidden="true" focusable="false" class="w-7 h-7 text-af-blue opacity-50 translate-x-0.5" fill="currentColor" viewBox="0 0 24 24">
         <path d="M8 5v14l11-7z"/>
       </svg>
     </div>
@@ -33,7 +33,7 @@ const { title } = Astro.props;
     <div class="text-center">
       <p class="font-mono text-xs text-af-blue/50 tracking-widest uppercase">Video coming soon</p>
       {title && (
-        <p class="text-af-muted text-xs mt-1">{title}</p>
+        <p class="text-af-gray text-xs mt-1">{title}</p>
       )}
     </div>
   </div>

@@ -8,7 +8,7 @@ const year = new Date().getFullYear();
       <!-- Brand -->
       <div class="col-span-1 md:col-span-1">
         <div class="flex items-center gap-3 mb-4">
-          <svg viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" class="w-7 h-7 flex-shrink-0">
+          <svg aria-hidden="true" focusable="false" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" class="w-7 h-7 flex-shrink-0">
             <polygon points="16,3 29,27 3,27" fill="none" stroke="#4ADE80" stroke-width="1.5"/>
             <line x1="9" y1="20" x2="23" y2="20" stroke="#4ADE80" stroke-width="1.5"/>
             <circle cx="16" cy="3" r="1.5" fill="#4ADE80"/>
@@ -29,10 +29,15 @@ const year = new Date().getFullYear();
           {[
             { label: 'Projects', href: '/aina-foundry/projects' },
             { label: 'About', href: '/aina-foundry/about' },
-            { label: 'Blog', href: 'https://purplemaia.org/blog' },
+            { label: 'Blog', href: 'https://blog.labs.purplemaia.org/', external: true },
           ].map(link => (
             <li>
-              <a href={link.href} class="text-af-gray text-sm hover:text-af-green transition-colors duration-200">
+              <a
+                href={link.href}
+                target={link.external ? '_blank' : undefined}
+                rel={link.external ? 'noopener noreferrer' : undefined}
+                class="text-af-gray text-sm hover:text-af-green transition-colors duration-200"
+              >
                 {link.label}
               </a>
             </li>
@@ -54,7 +59,7 @@ const year = new Date().getFullYear();
             class="inline-flex items-center gap-1.5 text-xs font-mono text-af-green hover:text-af-green/80 transition-colors"
           >
             Purple Maiʻa Foundation
-            <svg class="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <svg aria-hidden="true" focusable="false" class="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/>
             </svg>
           </a>
@@ -63,10 +68,10 @@ const year = new Date().getFullYear();
     </div>
 
     <div class="mt-10 pt-8 border-t border-af-border flex flex-col sm:flex-row items-center justify-between gap-4">
-      <p class="font-mono text-xs text-af-muted">
+      <p class="font-mono text-xs text-af-gray">
         © {year} ʻĀina Foundry · Purple Maiʻa Foundation · All rights reserved.
       </p>
-      <p class="font-mono text-xs text-af-muted">
+      <p class="font-mono text-xs text-af-gray">
         Technology must honor place, respect ʻike, and return value to community.
       </p>
     </div>

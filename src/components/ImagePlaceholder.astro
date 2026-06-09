@@ -92,7 +92,7 @@ const iconSize = compact ? 'w-7 h-7' : 'w-10 h-10';
   <span class="absolute bottom-3 right-3 w-3 h-3 border-b border-r opacity-30 border-current"></span>
 
   <!-- Icon -->
-  <svg class:list={[iconSize, 'opacity-40 relative z-10']} fill="none" viewBox="0 0 24 24" stroke="currentColor" set:html={cfg.icon} />
+  <svg aria-hidden="true" focusable="false" class:list={[iconSize, 'opacity-40 relative z-10']} fill="none" viewBox="0 0 24 24" stroke="currentColor" set:html={cfg.icon} />
 
   <!-- Label -->
   {!compact && (

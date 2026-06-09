@@ -44,7 +44,7 @@ const categoryLabels: Record<string, string> = {
   <!-- Back nav -->
   <div class="container-site pt-8 pb-4">
     <a href="/aina-foundry/projects" class="inline-flex items-center gap-2 text-sm text-af-gray hover:text-af-white transition-colors font-mono">
-      <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+      <svg aria-hidden="true" focusable="false" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
       </svg>
       All Projects
@@ -71,7 +71,7 @@ const categoryLabels: Record<string, string> = {
           <div class="flex flex-wrap items-center gap-3 mb-4">
             <span class:list={[s.color]}>{s.label}</span>
             <span class="tag">{categoryLabels[category] ?? category}</span>
-            <span class="font-mono text-xs text-af-muted">{year}</span>
+            <span class="font-mono text-xs text-af-gray">{year}</span>
           </div>
           <h1 class="text-3xl sm:text-4xl font-bold text-af-white mb-3 leading-tight">{title}</h1>
           <p class="text-lg text-af-silver leading-relaxed">{tagline}</p>
@@ -84,7 +84,7 @@ const categoryLabels: Record<string, string> = {
                 class="btn-primary"
               >
                 {primaryLink.label}
-                <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <svg aria-hidden="true" focusable="false" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/>
                 </svg>
               </a>
@@ -124,7 +124,7 @@ const categoryLabels: Record<string, string> = {
           <div class="flex items-center justify-between mb-6">
             <h2 class="text-af-white font-bold text-xl">Gallery</h2>
             {(!images || images.length === 0) && (
-              <span class="font-mono text-xs text-af-muted tracking-widest uppercase">Photos coming soon</span>
+              <span class="font-mono text-xs text-af-gray tracking-widest uppercase">Photos coming soon</span>
             )}
           </div>
           <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -162,15 +162,15 @@ const categoryLabels: Record<string, string> = {
             <h3 class="text-af-white font-semibold text-sm mb-4">Project Details</h3>
             <dl class="space-y-3">
               <div>
-                <dt class="font-mono text-[11px] text-af-muted uppercase tracking-widest mb-1">Status</dt>
+                <dt class="font-mono text-[11px] text-af-gray uppercase tracking-widest mb-1">Status</dt>
                 <dd><span class:list={[s.color, 'text-xs']}>{s.label}</span></dd>
               </div>
               <div>
-                <dt class="font-mono text-[11px] text-af-muted uppercase tracking-widest mb-1">Category</dt>
+                <dt class="font-mono text-[11px] text-af-gray uppercase tracking-widest mb-1">Category</dt>
                 <dd class="text-af-silver text-sm">{categoryLabels[category] ?? category}</dd>
               </div>
               <div>
-                <dt class="font-mono text-[11px] text-af-muted uppercase tracking-widest mb-1">Year</dt>
+                <dt class="font-mono text-[11px] text-af-gray uppercase tracking-widest mb-1">Year</dt>
                 <dd class="text-af-silver text-sm font-mono">{year}</dd>
               </div>
             </dl>
@@ -223,7 +223,7 @@ const categoryLabels: Record<string, string> = {
                         : 'text-af-gray hover:text-af-silver',
                     ]}
                   >
-                    <svg class="w-4 h-4 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <svg aria-hidden="true" focusable="false" class="w-4 h-4 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                       <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/>
                     </svg>
                     {link.label}

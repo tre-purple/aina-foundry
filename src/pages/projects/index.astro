@@ -10,23 +10,47 @@ const sorted = allProjects.sort((a, b) => {
   return a.data.order - b.data.order || b.data.year - a.data.year;
 });
 
+// Human-readable labels for every possible value in the schema.
+const categoryLabels: Record<string, string> = {
+  'place-based':                'Place-Based Engineering',
+  'agentic-governance':         'Agentic Governance',
+  'sustainable-ai':             'Sustainable AI Infrastructure',
+  'environmental-intelligence': 'Environmental Intelligence',
+  restoration:                  'ʻĀina Restoration',
+  sensors:                      'Sensors & Monitoring',
+  communications:               'Communications',
+  data:                         'Data & AI',
+  education:                    'Education',
+  health:                       'Health',
+  infrastructure:               'Infrastructure',
+  other:                        'Other',
+};
+
+const statusLabels: Record<string, string> = {
+  'initial-build': 'Initial Build',
+  testing:         'Testing / QA',
+  active:          'Active',
+  prototype:       'Prototype',
+  venture:         'Venture',
+  research:        'Research',
+  completed:       'Completed',
+};
+
+// Only surface filters for values that actually exist in the portfolio,
+// so the controls never offer options that yield zero results.
+const presentCategories = [...new Set(allProjects.map(p => p.data.category))]
+  .sort((a, b) => (categoryLabels[a] ?? a).localeCompare(categoryLabels[b] ?? b));
+const presentStatuses = [...new Set(allProjects.map(p => p.data.status))]
+  .sort((a, b) => (statusLabels[a] ?? a).localeCompare(statusLabels[b] ?? b));
+
 const categories = [
-  { value: 'all',                      label: 'All Projects' },
-  { value: 'place-based',              label: 'Place-Based Engineering' },
-  { value: 'agentic-governance',       label: 'Agentic Governance' },
-  { value: 'sustainable-ai',           label: 'Sustainable AI Infrastructure' },
-  { value: 'environmental-intelligence', label: 'Environmental Intelligence' },
+  { value: 'all', label: 'All Projects' },
+  ...presentCategories.map(c => ({ value: c, label: categoryLabels[c] ?? c })),
 ];
 
 const statuses = [
-  { value: 'all',           label: 'All Statuses' },
-  { value: 'initial-build', label: 'Initial Build' },
-  { value: 'testing',       label: 'Testing / QA' },
-  { value: 'active',        label: 'Active' },
-  { value: 'prototype',     label: 'Prototype' },
-  { value: 'venture',       label: 'Venture' },
-  { value: 'research',      label: 'Research' },
-  { value: 'completed',     label: 'Completed' },
+  { value: 'all', label: 'All Statuses' },
+  ...presentStatuses.map(s => ({ value: s, label: statusLabels[s] ?? s })),
 ];
 ---
 
@@ -52,7 +76,7 @@ const statuses = [
       <!-- Count -->
       <div class="mt-6 flex items-center gap-2">
         <span class="font-mono text-sm text-af-green" id="project-count">{sorted.length}</span>
-        <span class="text-af-muted text-sm">projects</span>
+        <span class="text-af-gray text-sm">projects</span>
       </div>
     </div>
   </section>
@@ -106,7 +130,7 @@ const statuses = [
 
     <!-- Empty state -->
     <div id="empty-state" class="hidden py-24 text-center">
-      <p class="text-af-muted text-lg font-mono">No projects match your filters.</p>
+      <p class="text-af-gray text-lg font-mono">No projects match your filters.</p>
       <button id="reset-filters" class="mt-4 btn-outline text-sm">
         Reset filters
       </button>
