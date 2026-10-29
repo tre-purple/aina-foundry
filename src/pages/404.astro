@@ -1,0 +1,21 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { withBase } from '../data/site';
+---
+
+<BaseLayout title="Page not found" description="This page could not be found.">
+  <meta slot="head" name="robots" content="noindex" />
+  <section class="bg-ink text-paper min-h-[100svh] flex flex-col">
+    <div class="wrap flex-1 flex flex-col pt-48 sm:pt-64 pb-8">
+      <h1 class="display">Not found.</h1>
+      <div class="grid-site gap-y-4 mt-auto pt-24">
+        <p class="caps col-span-12 sm:col-span-8 text-smoke">Error 404</p>
+        <div class="col-span-12 sm:col-span-4">
+          <p class="caps mb-4">This page may have moved, or never existed.</p>
+          <a href={withBase()} class="caps link-line block w-fit py-[5px]">Home →</a>
+          <a href={withBase('projects/')} class="caps link-line block w-fit py-[5px]">Projects →</a>
+        </div>
+      </div>
+    </div>
+  </section>
+</BaseLayout>

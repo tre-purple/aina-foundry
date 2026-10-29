@@ -4,6 +4,7 @@ tagline: "Mobile app for MAʻO Farms haumāna to log daily kilo observations —
 description: "A native mobile app bringing the Hawaiian practice of kilo (observation) into daily digital practice for MAʻO Farms haumāna, with admin tools for aggregated wellbeing data."
 status: "testing"
 category: "place-based"
+stack: "data"
 tags: ["mobile", "kilo", "MAʻO Farms", "haumāna", "React Native", "Expo", "wellbeing", "moʻolelo"]
 year: 2025
 featured: false

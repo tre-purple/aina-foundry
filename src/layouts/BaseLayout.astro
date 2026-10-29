@@ -1,7 +1,13 @@
 ---
+import '@fontsource/instrument-sans/400.css';
+import '@fontsource/instrument-sans/500.css';
+import '@fontsource/instrument-sans/600.css';
+import '@fontsource/barlow/400.css';
 import '../styles/global.css';
+import headingFont from '@fontsource/instrument-sans/files/instrument-sans-latin-500-normal.woff2?url';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
+import { withBase } from '../data/site';
 
 interface Props {
   title: string;
@@ -11,10 +17,12 @@ interface Props {
 
 const {
   title,
-  description = 'ʻĀina Foundry — Applied innovation and prototyping at Purple Maiʻa Foundation. Building culturally grounded technology for indigenous communities.',
-  ogImage = '/aina-foundry/og-default.png',
+  description = 'ʻĀina Foundry at Purple Maiʻa Foundation builds the Sovereign Stack — decentralized, community-governed data and compute infrastructure that puts knowledge and decision-making back in community hands.',
+  ogImage = withBase('og-default.png'),
 } = Astro.props;
 
+// Dimensions are only known for the default share image.
+const isDefaultOgImage = !Astro.props.ogImage;
 const canonicalURL = new URL(Astro.url.pathname, Astro.site);
 const ogImageURL = new URL(ogImage, Astro.site);
 ---
@@ -24,19 +32,33 @@ const ogImageURL = new URL(ogImage, Astro.site);
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="icon" type="image/svg+xml" href="/aina-foundry/favicon.svg" />
+    <link rel="icon" type="image/svg+xml" href={withBase('favicon.svg')} />
+    <link rel="apple-touch-icon" href={withBase('apple-touch-icon.png')} />
+    <link rel="sitemap" href={withBase('sitemap-index.xml')} />
     <meta name="generator" content={Astro.generator} />
 
     <title>{title} | ʻĀina Foundry</title>
     <meta name="description" content={description} />
     <link rel="canonical" href={canonicalURL} />
 
+    <!-- Fonts are self-hosted; preload the weight used by every page headline -->
+    <link rel="preload" href={headingFont} as="font" type="font/woff2" crossorigin />
+
     <!-- Open Graph -->
     <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="ʻĀina Foundry" />
+    <meta property="og:locale" content="en_US" />
     <meta property="og:url" content={canonicalURL} />
     <meta property="og:title" content={`${title} | ʻĀina Foundry`} />
     <meta property="og:description" content={description} />
     <meta property="og:image" content={ogImageURL} />
+    {isDefaultOgImage && (
+      <>
+        <meta property="og:image:width" content="1200" />
+        <meta property="og:image:height" content="630" />
+        <meta property="og:image:alt" content="ʻĀina Foundry — The Sovereign Stack" />
+      </>
+    )}
 
     <!-- Twitter -->
     <meta name="twitter:card" content="summary_large_image" />
@@ -44,13 +66,16 @@ const ogImageURL = new URL(ogImage, Astro.site);
     <meta name="twitter:description" content={description} />
     <meta name="twitter:image" content={ogImageURL} />
 
-    <!-- Theme color -->
-    <meta name="theme-color" content="#07090A" />
+    <meta name="theme-color" content="#000000" />
+
+    <slot name="head" />
+
+    <script is:inline>document.documentElement.classList.add('js');</script>
   </head>
   <body class="min-h-screen flex flex-col">
     <a
       href="#main-content"
-      class="sr-only focus:not-sr-only focus:fixed focus:top-3 focus:left-3 focus:z-[100] focus:px-4 focus:py-2 focus:rounded-sm focus:bg-af-green focus:text-af-black focus:font-semibold focus:text-sm"
+      class="sr-only focus:not-sr-only focus:fixed focus:top-3 focus:left-3 focus:z-[100] focus:px-4 focus:py-2 focus:bg-paper focus:text-ink caps"
     >
       Skip to content
     </a>
@@ -59,5 +84,20 @@ const ogImageURL = new URL(ogImage, Astro.site);
       <slot />
     </main>
     <Footer />
+
+    <script>
+      // Fade sections up as they enter the viewport.
+      const targets = document.querySelectorAll<HTMLElement>('[data-reveal]');
+      const observer = new IntersectionObserver(
+        entries => entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('is-visible');
+            observer.unobserve(entry.target);
+          }
+        }),
+        { rootMargin: '0px 0px -10% 0px' },
+      );
+      targets.forEach(el => observer.observe(el));
+    </script>
   </body>
 </html>

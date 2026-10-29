@@ -4,6 +4,7 @@ tagline: "A test bed for building and managing agentic tooling — spec-driven a
 description: "Purple Maiʻa's experiment in autonomous software development: AI agents build, review, and deploy production software from functional specs, with humans reviewing rather than writing code."
 status: "initial-build"
 category: "agentic-governance"
+stack: "intelligence"
 tags: ["agentic", "autonomous dev", "Claude Code", "Codex", "spec-driven", "AI coding", "GitHub SpecKit"]
 year: 2025
 featured: true

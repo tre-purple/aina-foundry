@@ -4,6 +4,7 @@ tagline: "Using AI agents to automate backroom organizational processes — stat
 description: "An umbrella for Purple Maiʻa's internal automation work: AI agents that read Slack, GitHub, Google Drive, and Granola to generate weekly status reports, flag project drift, and surface blockers automatically."
 status: "initial-build"
 category: "agentic-governance"
+stack: "intelligence"
 tags: ["AI agents", "automation", "status reporting", "Slack", "GitHub", "Granola", "knowledge management"]
 year: 2025
 featured: true

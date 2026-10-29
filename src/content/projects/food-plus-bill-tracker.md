@@ -4,6 +4,7 @@ tagline: "Hawaiʻi legislative bill tracker that simplifies dense legal language
 description: "Automatically tracks food-related bills through the Hawaiʻi State Legislature using nightly scraping and AI classification, displayed on a kanban board that mirrors the real legislative process."
 status: "testing"
 category: "place-based"
+stack: "intelligence"
 tags: ["food systems", "Hawaiʻi legislature", "AI", "civic tech", "kanban", "advocacy", "Open States", "bill tracking"]
 year: 2025
 featured: true

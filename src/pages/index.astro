@@ -1,205 +1,239 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
-import ProjectCard from '../components/ProjectCard.astro';
+import ProjectRow from '../components/ProjectRow.astro';
 import { getCollection } from 'astro:content';
+import { Picture } from 'astro:assets';
+import hackathonPhoto from '../assets/build4aina-2025.jpg';
+import { stackLayers, values } from '../data/sovereignty';
+import { contactEmail, statusLabels, withBase } from '../data/site';
 
-const allProjects = await getCollection('projects');
-const featured = allProjects
-  .filter(p => p.data.featured)
-  .sort((a, b) => a.data.order - b.data.order)
-  .slice(0, 6);
+const allProjects = (await getCollection('projects'))
+  .sort((a, b) => a.data.order - b.data.order);
 
-const stats = [
-  { value: allProjects.length + '+', label: 'Projects' },
-  { value: '2019', label: 'Founded' },
-  { value: 'Hawaiʻi', label: 'Based' },
-  { value: '∞', label: 'Community Impact' },
-];
+const layers = stackLayers.map(layer => ({
+  ...layer,
+  projects: allProjects.filter(p => p.data.stack === layer.key),
+}));
 
-const pillars = [
-  {
-    icon: `<svg aria-hidden="true" focusable="false" fill="none" viewBox="0 0 24 24" stroke="currentColor" class="w-6 h-6"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9.75 3.104v5.714a2.25 2.25 0 01-.659 1.591L5 14.5M9.75 3.104c-.251.023-.501.05-.75.082m.75-.082a24.301 24.301 0 014.5 0m0 0v5.714c0 .597.237 1.17.659 1.591L19.8 15.3M14.25 3.104c.251.023.501.05.75.082M19.8 15.3l-1.57.393A9.065 9.065 0 0112 15a9.065 9.065 0 00-6.23-.693L5 14.5m14.8.8l1.402 1.402c1.232 1.232.65 3.318-1.067 3.611A48.309 48.309 0 0112 21c-2.773 0-5.491-.235-8.135-.687-1.718-.293-2.3-2.379-1.067-3.61L5 14.5"/></svg>`,
-    title: 'ʻĀina Rooted',
-    description: 'Every project begins with place. Technology must honor the land, the water, and the communities that steward them.',
-    color: 'green',
+const organization = {
+  '@context': 'https://schema.org',
+  '@type': 'Organization',
+  name: 'ʻĀina Foundry',
+  url: new URL(import.meta.env.BASE_URL, Astro.site).href,
+  logo: new URL(withBase('apple-touch-icon.png'), Astro.site).href,
+  email: contactEmail,
+  description: 'Building decentralized, community-governed data and compute infrastructure that puts knowledge and decision-making back in community hands.',
+  parentOrganization: {
+    '@type': 'NonprofitOrganization',
+    name: 'Purple Maiʻa Foundation',
+    url: 'https://purplemaia.org',
   },
-  {
-    icon: `<svg aria-hidden="true" focusable="false" fill="none" viewBox="0 0 24 24" stroke="currentColor" class="w-6 h-6"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3.75 13.5l10.5-11.25L12 10.5h8.25L9.75 21.75 12 13.5H3.75z"/></svg>`,
-    title: 'Rapid Prototyping',
-    description: 'From vetted idea to working prototype fast. We move at the speed of community need, not corporate timelines.',
-    color: 'blue',
-  },
-  {
-    icon: `<svg aria-hidden="true" focusable="false" fill="none" viewBox="0 0 24 24" stroke="currentColor" class="w-6 h-6"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M18 18.72a9.094 9.094 0 003.741-.479 3 3 0 00-4.682-2.72m.94 3.198l.001.031c0 .225-.012.447-.037.666A11.944 11.944 0 0112 21c-2.17 0-4.207-.576-5.963-1.584A6.062 6.062 0 016 18.719m12 0a5.971 5.971 0 00-.941-3.197m0 0A5.995 5.995 0 0012 12.75a5.995 5.995 0 00-5.058 2.772m0 0a3 3 0 00-4.681 2.72 8.986 8.986 0 003.74.477m.94-3.197a5.971 5.971 0 00-.94 3.197M15 6.75a3 3 0 11-6 0 3 3 0 016 0zm6 3a2.25 2.25 0 11-4.5 0 2.25 2.25 0 014.5 0zm-13.5 0a2.25 2.25 0 11-4.5 0 2.25 2.25 0 014.5 0z"/></svg>`,
-    title: 'Community Vetted',
-    description: 'Solutions are co-designed with the communities they serve. Impact requires trust, and trust is built through accountability.',
-    color: 'teal',
-  },
-  {
-    icon: `<svg aria-hidden="true" focusable="false" fill="none" viewBox="0 0 24 24" stroke="currentColor" class="w-6 h-6"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 17.25v1.007a3 3 0 01-.879 2.122L7.5 21h9l-.621-.621A3 3 0 0115 18.257V17.25m6-12V15a2.25 2.25 0 01-2.25 2.25H5.25A2.25 2.25 0 013 15V5.25m18 0A2.25 2.25 0 0018.75 3H5.25A2.25 2.25 0 003 5.25m18 0H3"/></svg>`,
-    title: 'Venture Ready',
-    description: 'Prototypes that prove themselves move into ventures. We build for longevity, not demos.',
-    color: 'green',
-  },
-];
+};
+
+// Key words stay full-strength even when the rest of the question is dimmed.
+const emphasize = (text: string, words: string[]) =>
+  words.reduce((html, word) => html.replace(word, `<span class="text-ink">${word}</span>`), text);
 ---
 
-<BaseLayout title="Indigenous Innovation in Practice">
-  <!-- Hero Section -->
-  <section class="relative min-h-[90vh] flex items-center overflow-hidden">
-    <!-- Background grid + glow -->
-    <div class="absolute inset-0 bg-grid-pattern bg-grid opacity-60"></div>
-    <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-af-green/5 rounded-full blur-3xl pointer-events-none"></div>
-    <div class="absolute top-1/4 right-1/4 w-[300px] h-[300px] bg-af-blue/5 rounded-full blur-3xl pointer-events-none"></div>
+<BaseLayout title="The Sovereign Stack">
+  <script slot="head" type="application/ld+json" set:html={JSON.stringify(organization)} />
 
-    <div class="container-site relative z-10 py-24">
-      <!-- Label -->
-      <div class="flex items-center gap-3 mb-8">
-        <div class="w-2 h-2 rounded-full bg-af-green animate-pulse"></div>
-        <span class="section-label">ʻĀina Foundry · Purple Maiʻa Foundation</span>
+  <!-- Hero -->
+  <section class="relative min-h-[100svh] bg-ink text-paper flex flex-col overflow-hidden">
+    <Picture
+      src={hackathonPhoto}
+      formats={['avif', 'webp']}
+      widths={[480, 725]}
+      sizes="100vw"
+      alt=""
+      loading="eager"
+      pictureAttributes={{ class: 'absolute inset-0' }}
+      class="w-full h-full object-cover grayscale opacity-[0.28] scale-105"
+    />
+    <div class="absolute inset-0 bg-linear-to-b from-ink/60 via-transparent to-ink"></div>
+
+    <div class="wrap relative flex-1 flex flex-col pt-40 pb-8">
+      <div class="grid-site gap-y-8 my-auto items-end">
+        <h1 class="display col-span-12 lg:col-span-8">
+          The Sovereign<br />Stack
+        </h1>
+        <p class="caps col-span-12 sm:col-span-6 lg:col-start-9 lg:col-span-3 lg:pb-3">
+          Decentralized, community-governed data and compute infrastructure — built in Hawaiʻi, governed by Hawaiʻi.
+        </p>
       </div>
 
-      <!-- Main headline -->
-      <h1 class="text-5xl sm:text-6xl lg:text-7xl font-bold text-af-white leading-[1.05] mb-6">
-        Indigenous<br />
-        Innovation<br />
-        <span class="text-af-green text-glow">Into Practice.</span>
-      </h1>
+      <div class="grid-site mt-16">
+        <p class="caps text-smoke col-span-6 lg:col-span-8">ʻĀina Foundry · Purple Maiʻa</p>
+        <a href="#story" class="caps link-line col-span-6 lg:col-span-4 justify-self-end lg:justify-self-start">Why sovereignty ↓</a>
+      </div>
+    </div>
+  </section>
 
-      <p class="text-lg sm:text-xl text-af-silver max-w-2xl leading-relaxed mb-10">
-        We are the applied innovation and prototyping arm of Purple Maiʻa Foundation.
-        We build culturally grounded technology — moving ideas into working prototypes,
-        and prototypes into ventures that serve community.
+  <!-- Statement -->
+  <section id="story" class="on-paper bg-paper text-ink scroll-mt-0">
+    <div class="wrap pt-8 pb-24 sm:pb-32">
+      <div class="grid-site">
+        <p class="caps col-span-6 sm:col-span-8">The Sovereign Stack</p>
+        <p class="caps col-span-6 sm:col-span-4 text-graphite">Building with ʻāina first</p>
+      </div>
+
+      <p class="statement mt-40 sm:mt-56 max-w-[34ch] sm:max-w-none" data-reveal>
+        We are building decentralized, community-governed data and compute infrastructure that puts
+        knowledge and decision-making back in community hands — giving us the capacity to power our
+        own intelligence.
+      </p>
+      <p class="statement mt-6 text-graphite" data-reveal>
+        We are developing protocols to explore how Native Hawaiian knowledge and data can be safely
+        stored, accessed, and interpreted.
       </p>
 
-      <div class="flex flex-wrap items-center gap-4">
-        <a href="/aina-foundry/projects" class="btn-primary text-base px-7 py-3">
-          Explore Projects
-        </a>
-        <a href="/aina-foundry/about" class="btn-outline text-base px-7 py-3">
-          About the Foundry
-        </a>
-      </div>
-    </div>
-
-    <!-- Scroll indicator -->
-    <div class="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 text-af-gray animate-bounce">
-      <svg aria-hidden="true" focusable="false" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M19 9l-7 7-7-7"/>
-      </svg>
+      <figure class="grid-site gap-y-4 mt-24 sm:mt-36" data-reveal>
+        <figcaption class="caps text-graphite col-span-12 lg:col-span-6 order-2 lg:order-1 self-end">
+          2025 Build4ʻĀina Hackathon<br />Puʻuhonua O Waimānalo
+        </figcaption>
+        <Picture
+          src={hackathonPhoto}
+          formats={['avif', 'webp']}
+          widths={[400, 725]}
+          sizes="(min-width: 1024px) 50vw, 100vw"
+          alt="A large group of hackathon participants gathered on a stone wall in a forested valley at Puʻuhonua O Waimānalo."
+          pictureAttributes={{ class: 'col-span-12 lg:col-span-6 order-1 lg:order-2' }}
+          class="w-full aspect-[5/4] object-cover"
+        />
+      </figure>
     </div>
   </section>
 
-  <!-- Stats Bar -->
-  <section class="border-y border-af-border bg-af-surface/40">
-    <div class="container-site py-8">
-      <div class="grid grid-cols-2 md:grid-cols-4 gap-8">
-        {stats.map(stat => (
-          <div class="text-center">
-            <div class="text-3xl font-bold text-af-green font-mono">{stat.value}</div>
-            <div class="text-sm text-af-gray mt-1 font-medium">{stat.label}</div>
+  <!-- Why + What: the three questions, each opening onto its layer of the stack -->
+  <section class="on-paper bg-paper text-ink border-t border-rule-light">
+    <div class="wrap pt-8 pb-24 sm:pb-32">
+      <div class="grid-site gap-y-4">
+        <h2 class="caps col-span-12 sm:col-span-8">Achieving sovereignty</h2>
+        <p class="caps col-span-12 sm:col-span-4 text-graphite">
+          Every system that holds community knowledge answers three questions. We build so the answer, in Hawaiʻi, is us.
+        </p>
+      </div>
+
+      <div id="sovereignty" class="mt-20 sm:mt-28 lg:grid lg:grid-cols-12 lg:gap-x-8">
+        {layers.map((layer, i) => (
+          <div class="contents">
+            <h3
+              class="lg:col-span-8 lg:col-start-1 border-t border-rule-light lg:border-0"
+              style={`grid-row: ${i + 1}`}
+            >
+              <button
+                type="button"
+                class:list={['sov-q group w-full text-left pt-6 pb-4 lg:py-2 headline transition-colors duration-500', i === 0 ? 'lg:text-ink' : 'lg:text-ghost']}
+                data-index={i}
+                aria-controls={`layer-${layer.key}`}
+              >
+                <span set:html={emphasize(layer.question, layer.highlights)} />
+              </button>
+            </h3>
+            <div
+              id={`layer-${layer.key}`}
+              class:list={['sov-panel lg:col-start-9 lg:col-span-4 lg:row-start-1 lg:row-span-3 pb-10 lg:pb-0 lg:pt-3 transition-opacity duration-500', i === 0 ? 'is-active' : '']}
+            >
+              <p class="caps text-graphite mb-1">Layer 0{i + 1}</p>
+              <p class="caps mb-5">{layer.name}</p>
+              <p class="text-[17px] leading-relaxed mb-8 max-w-[44ch]">{layer.summary}</p>
+              <ul>
+                {layer.projects.map(project => (
+                  <li class="border-t border-rule-light">
+                    <a href={withBase(`projects/${project.id}/`)} class="group flex justify-between gap-4 py-2.5">
+                      <span class="caps link-line">{project.data.title}</span>
+                      <span class="caps text-graphite shrink-0">{statusLabels[project.data.status]}</span>
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            </div>
           </div>
         ))}
       </div>
     </div>
   </section>
 
-  <!-- Mission Section -->
-  <section class="container-site py-24">
-    <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
-      <div>
-        <p class="section-label mb-4">Our Purpose</p>
-        <h2 class="section-heading mb-6">
-          Technology that honors<br />place and returns<br />value to community.
-        </h2>
-        <p class="prose-af text-base mb-6">
-          ʻĀina Foundry exists at the intersection of cultural grounding and technical capability.
-          We believe that the most durable, impactful technology emerges from deep respect for ʻike,
-          ʻāina, and the people who carry that knowledge forward.
-        </p>
-        <p class="prose-af text-base mb-8">
-          By pairing rapid prototyping with community-led design, we build solutions that are
-          locally rooted, environmentally mindful, and built to last — not just to launch.
-        </p>
-        <a href="/aina-foundry/about" class="btn-outline">
-          Learn more about us
-          <svg aria-hidden="true" focusable="false" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
-          </svg>
-        </a>
-      </div>
+  <!-- How: values -->
+  <section class="bg-ink text-paper">
+    <div class="wrap pt-28 sm:pt-40 pb-24 sm:pb-32">
+      <p class="statement" data-reveal>
+        We build on hardware we own, guided by Native Hawaiian values and the CARE Principles —
+        powered by renewable energy, and designed so communities can repair, upgrade, and maintain
+        it themselves.
+      </p>
 
-      <!-- Pillars grid -->
-      <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-        {pillars.map(pillar => (
-          <div class="card p-6">
-            <div class:list={[
-              'w-10 h-10 rounded-sm flex items-center justify-center mb-4',
-              pillar.color === 'green' ? 'bg-af-green/10 text-af-green' :
-              pillar.color === 'blue' ? 'bg-af-blue/10 text-af-blue' :
-              'bg-af-teal/10 text-af-teal'
-            ]} set:html={pillar.icon} />
-            <h3 class="text-af-white font-semibold mb-2">{pillar.title}</h3>
-            <p class="text-af-gray text-sm leading-relaxed">{pillar.description}</p>
-          </div>
-        ))}
-      </div>
-    </div>
-  </section>
-
-  <!-- Featured Projects -->
-  {featured.length > 0 && (
-    <section class="border-t border-af-border py-24">
-      <div class="container-site">
-        <div class="flex items-end justify-between mb-12">
-          <div>
-            <p class="section-label mb-3">Portfolio</p>
-            <h2 class="section-heading">Featured Projects</h2>
-          </div>
-          <a href="/aina-foundry/projects" class="btn-outline hidden sm:flex">
-            All Projects
-            <svg aria-hidden="true" focusable="false" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
-            </svg>
-          </a>
-        </div>
-
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {featured.map(project => (
-            <ProjectCard project={project} />
+      <div class="grid-site gap-y-6 mt-28 sm:mt-40">
+        <h2 class="caps col-span-12 lg:col-span-6 pt-5 border-t border-rule-dark">Our values</h2>
+        <ol class="col-span-12 lg:col-span-6">
+          {values.map((v, i) => (
+            <li class="grid grid-cols-6 gap-x-4 sm:gap-x-8 py-5 border-t border-rule-dark" data-reveal style={`--reveal-delay: ${i * 80}ms`}>
+              <span class="caps text-smoke col-span-1 pt-1.5">0{i + 1}</span>
+              <div class="col-span-5">
+                <h3 class="text-xl sm:text-2xl font-medium tracking-[-0.01em] mb-2">{v.title}</h3>
+                <p class="text-smoke leading-relaxed max-w-[52ch]">{v.description}</p>
+              </div>
+            </li>
           ))}
-        </div>
-
-        <div class="mt-10 text-center sm:hidden">
-          <a href="/aina-foundry/projects" class="btn-outline">
-            View All Projects
-          </a>
-        </div>
+        </ol>
       </div>
-    </section>
-  )}
+    </div>
+  </section>
 
-  <!-- CTA Section -->
-  <section class="container-site py-24">
-    <div class="relative rounded-sm border border-af-border bg-af-surface overflow-hidden">
-      <div class="absolute inset-0 bg-grid-pattern bg-grid opacity-40"></div>
-      <div class="absolute top-0 right-0 w-64 h-64 bg-af-green/5 rounded-full blur-3xl"></div>
-      <div class="relative z-10 px-8 py-16 text-center max-w-2xl mx-auto">
-        <p class="section-label mb-4">Get Involved</p>
-        <h2 class="section-heading mb-6">Have an idea worth building?</h2>
-        <p class="prose-af mb-8">
-          ʻĀina Foundry is always interested in community-vetted problems that need technological solutions.
-          If you're working on something that serves ʻāina or community — let's talk.
+  <!-- Work -->
+  <section class="on-paper bg-paper text-ink">
+    <div class="wrap pt-8 pb-24 sm:pb-32">
+      <div class="grid-site mb-20 sm:mb-28">
+        <h2 class="caps col-span-6 sm:col-span-8">Current work</h2>
+        <a href={withBase("projects/")} class="caps link-line col-span-6 sm:col-span-4 justify-self-start">All projects →</a>
+      </div>
+      <div class="border-b border-rule-light">
+        {allProjects.map((project, i) => <ProjectRow project={project} index={i} />)}
+      </div>
+    </div>
+  </section>
+
+  <!-- Contact -->
+  <section class="bg-ink text-paper">
+    <div class="wrap pt-8 pb-24 sm:pb-32">
+      <div class="grid-site gap-y-4">
+        <h2 class="caps col-span-12 sm:col-span-8">Get involved</h2>
+        <p class="caps col-span-12 sm:col-span-4 text-smoke">
+          We work with community organizations, builders, and partners who want their data, their
+          machines, and their values to stay in Hawaiʻi.
         </p>
-        <div class="flex flex-wrap justify-center gap-4">
-          <a href="mailto:ainafoundry@purplemaia.org" class="btn-primary">
-            Start a Conversation
-          </a>
-          <a href="/aina-foundry/projects" class="btn-outline">
-            See What We've Built
-          </a>
-        </div>
       </div>
+      <p class="display mt-28 sm:mt-40" data-reveal>Build with<br />ʻāina first.</p>
+      <a href={`mailto:${contactEmail}`} class="statement link-line inline-block mt-10">{contactEmail} →</a>
     </div>
   </section>
 </BaseLayout>
+
+<script>
+  // Desktop: hovering or focusing a question brings its layer forward and dims the others.
+  const questions = document.querySelectorAll<HTMLButtonElement>('.sov-q');
+  const panels = document.querySelectorAll<HTMLElement>('.sov-panel');
+
+  function activate(index: number) {
+    questions.forEach((q, i) => {
+      q.classList.toggle('lg:text-ink', i === index);
+      q.classList.toggle('lg:text-ghost', i !== index);
+    });
+    panels.forEach((p, i) => p.classList.toggle('is-active', i === index));
+  }
+
+  questions.forEach((q, i) => {
+    q.addEventListener('mouseenter', () => activate(i));
+    q.addEventListener('focus', () => activate(i));
+    q.addEventListener('click', () => activate(i));
+  });
+</script>
+
+<style>
+  @media (min-width: 1024px) {
+    .sov-panel:not(.is-active) {
+      opacity: 0;
+      visibility: hidden;
+    }
+  }
+</style>

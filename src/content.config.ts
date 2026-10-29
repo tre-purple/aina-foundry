@@ -1,13 +1,16 @@
-import { defineCollection, z } from 'astro:content';
+import { defineCollection } from 'astro:content';
+import { glob } from 'astro/loaders';
+import { z } from 'astro/zod';
 
 const projectsCollection = defineCollection({
-  type: 'content',
+  loader: glob({ pattern: '**/[^_]*.{md,mdx}', base: './src/content/projects' }),
   schema: z.object({
     title: z.string(),
     tagline: z.string(),
     description: z.string(),
     status: z.enum(['active', 'prototype', 'testing', 'initial-build', 'venture', 'research', 'completed']),
     category: z.enum(['restoration', 'sensors', 'communications', 'data', 'education', 'health', 'infrastructure', 'place-based', 'agentic-governance', 'sustainable-ai', 'environmental-intelligence', 'other']),
+    stack: z.enum(['data', 'compute', 'intelligence']).optional(),
     tags: z.array(z.string()),
     year: z.number(),
     coverImage: z.string().optional(),

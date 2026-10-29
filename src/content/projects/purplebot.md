@@ -4,6 +4,7 @@ tagline: "An HR-persona Slack bot that carries out organizational tasks through 
 description: "An AI-powered HR persona living inside Slack that runs daily standups, classifies responses, sends tiered reminders, and delivers consolidated management summaries — no separate app required."
 status: "initial-build"
 category: "agentic-governance"
+stack: "intelligence"
 tags: ["Slack bot", "HR automation", "standup", "AI", "OpenClaw", "NemoClaw", "organizational ops"]
 year: 2025
 featured: false

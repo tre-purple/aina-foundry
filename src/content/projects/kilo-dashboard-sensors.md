@@ -4,6 +4,7 @@ tagline: "Sensor deployments, weather station maintenance, and the Raspberry Pi 
 description: "The physical infrastructure layer of the Kilo ecosystem: Raspberry Pi weather stations at partner farm sites, Adafruit sensor arrays, and a local-first data pipeline designed for total data sovereignty."
 status: "initial-build"
 category: "environmental-intelligence"
+stack: "data"
 tags: ["Raspberry Pi", "sensors", "Adafruit", "weather station", "local-first", "data sovereignty", "Tailscale", "Dokku"]
 year: 2025
 featured: true

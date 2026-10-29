@@ -4,6 +4,7 @@ tagline: "Dashboard platform for community organizations to track and visualize 
 description: "A dashboard platform for community organizations to track, visualize, and report on their impact data, powered by self-hosted PMF LLM endpoints and currently onboarding its first clients."
 status: "testing"
 category: "place-based"
+stack: "data"
 tags: ["dashboard", "impact data", "community orgs", "visualization", "LLM", "self-hosted AI", "client onboarding"]
 year: 2025
 featured: true

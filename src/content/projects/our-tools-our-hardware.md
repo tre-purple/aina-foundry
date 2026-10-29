@@ -4,6 +4,7 @@ tagline: "Exploring what Purple Maiʻa can get done with AI tools running on its
 description: "Systematic benchmarking of open-source language models on locally owned hardware, building toward a tiered architecture of edge devices and self-hosted AI endpoints that serve other ʻĀina Foundry projects."
 status: "initial-build"
 category: "sustainable-ai"
+stack: "compute"
 tags: ["open models", "local compute", "LLM", "benchmarking", "compute sovereignty", "hardware", "self-hosted inference"]
 year: 2025
 featured: true

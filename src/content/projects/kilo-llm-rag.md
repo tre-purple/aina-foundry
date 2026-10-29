@@ -4,6 +4,7 @@ tagline: "AI-assisted analysis of mixed quantitative and qualitative data for da
 description: "Retrieval-augmented generation pipeline that makes dashboard data conversational, letting users ask natural language questions and get answers grounded in real sensor, survey, and program data."
 status: "testing"
 category: "sustainable-ai"
+stack: "intelligence"
 tags: ["RAG", "LLM", "dashboard analytics", "soil data", "natural language", "AI", "Makaliʻi Metrics"]
 year: 2025
 featured: false
