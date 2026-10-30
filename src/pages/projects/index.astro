@@ -3,6 +3,7 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 import ProjectRow from '../../components/ProjectRow.astro';
 import { getCollection } from 'astro:content';
 import { stackLayers } from '../../data/sovereignty';
+import { projectsIntro, sovereignStack } from '../../data/messaging';
 
 const projects = (await getCollection('projects'))
   .sort((a, b) => a.data.order - b.data.order || b.data.year - a.data.year);
@@ -19,17 +20,17 @@ const filters = [
 
 <BaseLayout
   title="Projects"
-  description="ʻĀina Foundry projects across the Sovereign Stack — data sovereignty, compute sovereignty, and community intelligence."
+  description={`ʻĀina Foundry projects — ${projectsIntro.summary}`}
 >
   <section class="bg-ink text-paper">
     <div class="wrap pt-48 sm:pt-64 pb-8">
       <h1 class="display">Projects</h1>
       <div class="grid-site gap-y-4 mt-24 sm:mt-32">
         <p class="caps col-span-12 sm:col-span-8 text-smoke">
-          <span id="project-count">{projects.length}</span> projects across the Sovereign Stack
+          <span id="project-count">{projects.length}</span> projects
         </p>
         <p class="caps col-span-12 sm:col-span-4">
-          From early builds to ventures — each one answers a question of sovereignty.
+          {projectsIntro.summary}
         </p>
       </div>
     </div>
@@ -38,7 +39,7 @@ const filters = [
   <section class="on-paper bg-paper text-ink">
     <div class="wrap pt-8 pb-24 sm:pb-32">
       <div class="grid-site gap-y-4 mb-16 sm:mb-24">
-        <p class="caps col-span-12 sm:col-span-3">Filter by layer</p>
+        <p class="caps col-span-12 sm:col-span-3">Filter by {sovereignStack.name} layer</p>
         <div class="col-span-12 sm:col-span-9 flex flex-wrap gap-x-8 gap-y-2" role="group" aria-label="Filter projects by stack layer">
           {filters.map(f => (
             <button

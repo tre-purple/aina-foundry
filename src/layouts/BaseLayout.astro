@@ -8,18 +8,22 @@ import headingFont from '@fontsource/instrument-sans/files/instrument-sans-latin
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 import { withBase } from '../data/site';
+import { foundry } from '../data/messaging';
 
 interface Props {
-  title: string;
+  // Omit on the home page so the tab reads just "ʻĀina Foundry".
+  title?: string;
   description?: string;
   ogImage?: string;
 }
 
 const {
   title,
-  description = 'ʻĀina Foundry at Purple Maiʻa Foundation builds the Sovereign Stack — decentralized, community-governed data and compute infrastructure that puts knowledge and decision-making back in community hands.',
+  description = `ʻĀina Foundry — ${foundry.tagline}`,
   ogImage = withBase('og-default.png'),
 } = Astro.props;
+
+const fullTitle = title ? `${title} | ʻĀina Foundry` : 'ʻĀina Foundry';
 
 // Dimensions are only known for the default share image.
 const isDefaultOgImage = !Astro.props.ogImage;
@@ -37,7 +41,7 @@ const ogImageURL = new URL(ogImage, Astro.site);
     <link rel="sitemap" href={withBase('sitemap-index.xml')} />
     <meta name="generator" content={Astro.generator} />
 
-    <title>{title} | ʻĀina Foundry</title>
+    <title>{fullTitle}</title>
     <meta name="description" content={description} />
     <link rel="canonical" href={canonicalURL} />
 
@@ -49,20 +53,20 @@ const ogImageURL = new URL(ogImage, Astro.site);
     <meta property="og:site_name" content="ʻĀina Foundry" />
     <meta property="og:locale" content="en_US" />
     <meta property="og:url" content={canonicalURL} />
-    <meta property="og:title" content={`${title} | ʻĀina Foundry`} />
+    <meta property="og:title" content={fullTitle} />
     <meta property="og:description" content={description} />
     <meta property="og:image" content={ogImageURL} />
     {isDefaultOgImage && (
       <>
         <meta property="og:image:width" content="1200" />
         <meta property="og:image:height" content="630" />
-        <meta property="og:image:alt" content="ʻĀina Foundry — The Sovereign Stack" />
+        <meta property="og:image:alt" content="ʻĀina Foundry" />
       </>
     )}
 
     <!-- Twitter -->
     <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content={`${title} | ʻĀina Foundry`} />
+    <meta name="twitter:title" content={fullTitle} />
     <meta name="twitter:description" content={description} />
     <meta name="twitter:image" content={ogImageURL} />
 

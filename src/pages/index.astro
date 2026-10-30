@@ -6,6 +6,7 @@ import { Picture } from 'astro:assets';
 import hackathonPhoto from '../assets/build4aina-2025.jpg';
 import { stackLayers, values } from '../data/sovereignty';
 import { contactEmail, statusLabels, withBase } from '../data/site';
+import { foundry, projectsIntro, sovereignStack } from '../data/messaging';
 
 const allProjects = (await getCollection('projects'))
   .sort((a, b) => a.data.order - b.data.order);
@@ -22,7 +23,7 @@ const organization = {
   url: new URL(import.meta.env.BASE_URL, Astro.site).href,
   logo: new URL(withBase('apple-touch-icon.png'), Astro.site).href,
   email: contactEmail,
-  description: 'Building decentralized, community-governed data and compute infrastructure that puts knowledge and decision-making back in community hands.',
+  description: foundry.tagline,
   parentOrganization: {
     '@type': 'NonprofitOrganization',
     name: 'Purple Maiʻa Foundation',
@@ -35,7 +36,7 @@ const emphasize = (text: string, words: string[]) =>
   words.reduce((html, word) => html.replace(word, `<span class="text-ink">${word}</span>`), text);
 ---
 
-<BaseLayout title="The Sovereign Stack">
+<BaseLayout>
   <script slot="head" type="application/ld+json" set:html={JSON.stringify(organization)} />
 
   <!-- Hero -->
@@ -55,16 +56,16 @@ const emphasize = (text: string, words: string[]) =>
     <div class="wrap relative flex-1 flex flex-col pt-40 pb-8">
       <div class="grid-site gap-y-8 my-auto items-end">
         <h1 class="display col-span-12 lg:col-span-8">
-          The Sovereign<br />Stack
+          ʻĀina<br />Foundry
         </h1>
         <p class="caps col-span-12 sm:col-span-6 lg:col-start-9 lg:col-span-3 lg:pb-3">
-          Decentralized, community-governed data and compute infrastructure — built in Hawaiʻi, governed by Hawaiʻi.
+          {foundry.tagline}
         </p>
       </div>
 
       <div class="grid-site mt-16">
-        <p class="caps text-smoke col-span-6 lg:col-span-8">ʻĀina Foundry · Purple Maiʻa</p>
-        <a href="#story" class="caps link-line col-span-6 lg:col-span-4 justify-self-end lg:justify-self-start">Why sovereignty ↓</a>
+        <p class="caps text-smoke col-span-6 lg:col-span-8">Purple Maiʻa Foundation · Hawaiʻi</p>
+        <a href="#story" class="caps link-line col-span-6 lg:col-span-4 justify-self-end lg:justify-self-start">Who we are ↓</a>
       </div>
     </div>
   </section>
@@ -73,18 +74,15 @@ const emphasize = (text: string, words: string[]) =>
   <section id="story" class="on-paper bg-paper text-ink scroll-mt-0">
     <div class="wrap pt-8 pb-24 sm:pb-32">
       <div class="grid-site">
-        <p class="caps col-span-6 sm:col-span-8">The Sovereign Stack</p>
-        <p class="caps col-span-6 sm:col-span-4 text-graphite">Building with ʻāina first</p>
+        <p class="caps col-span-6 sm:col-span-8">About ʻĀina Foundry</p>
+        <a href={withBase('about/')} class="caps link-line col-span-6 sm:col-span-4 justify-self-start">More about us →</a>
       </div>
 
       <p class="statement mt-40 sm:mt-56 max-w-[34ch] sm:max-w-none" data-reveal>
-        We are building decentralized, community-governed data and compute infrastructure that puts
-        knowledge and decision-making back in community hands — giving us the capacity to power our
-        own intelligence.
+        {foundry.intro}
       </p>
       <p class="statement mt-6 text-graphite" data-reveal>
-        We are developing protocols to explore how Native Hawaiian knowledge and data can be safely
-        stored, accessed, and interpreted.
+        {foundry.approach}
       </p>
 
       <figure class="grid-site gap-y-4 mt-24 sm:mt-36" data-reveal>
@@ -104,57 +102,7 @@ const emphasize = (text: string, words: string[]) =>
     </div>
   </section>
 
-  <!-- Why + What: the three questions, each opening onto its layer of the stack -->
-  <section class="on-paper bg-paper text-ink border-t border-rule-light">
-    <div class="wrap pt-8 pb-24 sm:pb-32">
-      <div class="grid-site gap-y-4">
-        <h2 class="caps col-span-12 sm:col-span-8">Achieving sovereignty</h2>
-        <p class="caps col-span-12 sm:col-span-4 text-graphite">
-          Every system that holds community knowledge answers three questions. We build so the answer, in Hawaiʻi, is us.
-        </p>
-      </div>
-
-      <div id="sovereignty" class="mt-20 sm:mt-28 lg:grid lg:grid-cols-12 lg:gap-x-8">
-        {layers.map((layer, i) => (
-          <div class="contents">
-            <h3
-              class="lg:col-span-8 lg:col-start-1 border-t border-rule-light lg:border-0"
-              style={`grid-row: ${i + 1}`}
-            >
-              <button
-                type="button"
-                class:list={['sov-q group w-full text-left pt-6 pb-4 lg:py-2 headline transition-colors duration-500', i === 0 ? 'lg:text-ink' : 'lg:text-ghost']}
-                data-index={i}
-                aria-controls={`layer-${layer.key}`}
-              >
-                <span set:html={emphasize(layer.question, layer.highlights)} />
-              </button>
-            </h3>
-            <div
-              id={`layer-${layer.key}`}
-              class:list={['sov-panel lg:col-start-9 lg:col-span-4 lg:row-start-1 lg:row-span-3 pb-10 lg:pb-0 lg:pt-3 transition-opacity duration-500', i === 0 ? 'is-active' : '']}
-            >
-              <p class="caps text-graphite mb-1">Layer 0{i + 1}</p>
-              <p class="caps mb-5">{layer.name}</p>
-              <p class="text-[17px] leading-relaxed mb-8 max-w-[44ch]">{layer.summary}</p>
-              <ul>
-                {layer.projects.map(project => (
-                  <li class="border-t border-rule-light">
-                    <a href={withBase(`projects/${project.id}/`)} class="group flex justify-between gap-4 py-2.5">
-                      <span class="caps link-line">{project.data.title}</span>
-                      <span class="caps text-graphite shrink-0">{statusLabels[project.data.status]}</span>
-                    </a>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          </div>
-        ))}
-      </div>
-    </div>
-  </section>
-
-  <!-- How: values -->
+  <!-- How we work: values -->
   <section class="bg-ink text-paper">
     <div class="wrap pt-28 sm:pt-40 pb-24 sm:pb-32">
       <p class="statement" data-reveal>
@@ -181,14 +129,67 @@ const emphasize = (text: string, words: string[]) =>
   </section>
 
   <!-- Work -->
-  <section class="on-paper bg-paper text-ink">
+  <section id="work" class="on-paper bg-paper text-ink">
     <div class="wrap pt-8 pb-24 sm:pb-32">
-      <div class="grid-site mb-20 sm:mb-28">
-        <h2 class="caps col-span-6 sm:col-span-8">Current work</h2>
-        <a href={withBase("projects/")} class="caps link-line col-span-6 sm:col-span-4 justify-self-start">All projects →</a>
+      <div class="grid-site gap-y-4 mb-20 sm:mb-28">
+        <h2 class="caps col-span-12 sm:col-span-8">{projectsIntro.heading}</h2>
+        <p class="caps col-span-12 sm:col-span-4 text-graphite">{projectsIntro.summary}</p>
       </div>
       <div class="border-b border-rule-light">
         {allProjects.map((project, i) => <ProjectRow project={project} index={i} />)}
+      </div>
+      <a href={withBase("projects/")} class="caps link-line inline-block mt-8">All projects →</a>
+    </div>
+  </section>
+
+  <!-- The Sovereign Stack: what the work builds toward. Each question opens onto its layer and related projects. -->
+  <section class="on-paper bg-paper text-ink border-t border-rule-light">
+    <div class="wrap pt-8 pb-24 sm:pb-32">
+      <div class="grid-site gap-y-4">
+        <h2 class="caps col-span-12 sm:col-span-8">{sovereignStack.name}</h2>
+        <p class="caps col-span-12 sm:col-span-4 text-graphite">{sovereignStack.label}</p>
+      </div>
+
+      <p class="statement mt-40 sm:mt-56" data-reveal>{sovereignStack.intro}</p>
+      <p class="caps text-graphite mt-16 max-w-[52ch]">{sovereignStack.questionsLead}</p>
+
+      <div id="sovereignty" class="mt-12 sm:mt-16 lg:grid lg:grid-cols-12 lg:gap-x-8">
+        {layers.map((layer, i) => (
+          <div class="contents">
+            <h3
+              class="lg:col-span-8 lg:col-start-1 border-t border-rule-light lg:border-0"
+              style={`grid-row: ${i + 1}`}
+            >
+              <button
+                type="button"
+                class:list={['sov-q group w-full text-left pt-6 pb-4 lg:py-2 headline transition-colors duration-500', i === 0 ? 'lg:text-ink' : 'lg:text-ghost']}
+                data-index={i}
+                aria-controls={`layer-${layer.key}`}
+              >
+                <span set:html={emphasize(layer.question, layer.highlights)} />
+              </button>
+            </h3>
+            <div
+              id={`layer-${layer.key}`}
+              class:list={['sov-panel lg:col-start-9 lg:col-span-4 lg:row-start-1 lg:row-span-3 pb-10 lg:pb-0 lg:pt-3 transition-opacity duration-500', i === 0 ? 'is-active' : '']}
+            >
+              <p class="caps text-graphite mb-1">Layer 0{i + 1}</p>
+              <p class="caps mb-5">{layer.name}</p>
+              <p class="text-[17px] leading-relaxed mb-8 max-w-[44ch]">{layer.summary}</p>
+              {layer.projects.length > 0 && <p class="caps text-graphite mb-2">{sovereignStack.relatedLabel}</p>}
+              <ul>
+                {layer.projects.map(project => (
+                  <li class="border-t border-rule-light">
+                    <a href={withBase(`projects/${project.id}/`)} class="group flex justify-between gap-4 py-2.5">
+                      <span class="caps link-line">{project.data.title}</span>
+                      <span class="caps text-graphite shrink-0">{statusLabels[project.data.status]}</span>
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </div>
+        ))}
       </div>
     </div>
   </section>
