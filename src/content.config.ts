@@ -15,6 +15,8 @@ const projectsCollection = defineCollection({
     year: z.number(),
     coverImage: z.string().optional(),
     images: z.array(z.string()).optional(),
+    // Portrait phone screenshots, shown uncropped in a row instead of the 4:3 gallery.
+    screenshots: z.array(z.object({ src: z.string(), alt: z.string() })).optional(),
     videoUrl: z.string().optional(),
     team: z.array(z.string()).optional(),
     partners: z.array(z.string()).optional(),

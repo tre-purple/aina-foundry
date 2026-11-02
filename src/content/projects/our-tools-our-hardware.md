@@ -9,12 +9,12 @@ tags: ["open models", "local compute", "LLM", "benchmarking", "compute sovereign
 year: 2025
 featured: true
 order: 3
-team: ["David Pickett", "Jaden Kapali", "Makana"]
+team: ["David Pickett", "Jaden Kapali", "Makana", "Keneth Martin"]
 links:
-  - label: "Notes & Diagrams"
-    url: "https://github.com/PurpleMaia/q1-2026-our-tools-our-hardware-notes"
   - label: "Benchmark Notes"
     url: "https://github.com/PurpleMaia/terminal-bench-notes"
+  - label: "Custom Claude Code Tests"
+    url: "https://github.com/PurpleMaia/open-model-cc-tests"
 ---
 
 ## Overview

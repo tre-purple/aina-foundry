@@ -5,7 +5,7 @@ description: "Automatically tracks food-related bills through the Hawaiʻi State
 status: "testing"
 category: "place-based"
 stack: "intelligence"
-tags: ["food systems", "Hawaiʻi legislature", "AI", "civic tech", "kanban", "advocacy", "Open States", "bill tracking"]
+tags: ["food systems", "Hawaiʻi legislature", "AI", "civic tech", "kanban", "advocacy", "bill tracking"]
 year: 2025
 featured: true
 order: 1
@@ -13,13 +13,13 @@ team: ["Jaden Kapali", "Pohaikealoha"]
 partners: ["Food+ (Janine Mariano)"]
 links:
   - label: "Live Tracker"
-    url: "https://bill-tracker.sandbox.purplemaia.org"
+    url: "https://bill-tracker.purplemaia.org"
     highlight: true
   - label: "Frontend Repo"
-    url: "https://github.com/PurpleMaia/janine-foodplus-frontend"
+    url: "https://github.com/PurpleMaia/bill-tracker"
   - label: "Backend Scraper"
-    url: "https://github.com/PurpleMaia/foodplus-track-2025"
-  - label: "Public Version Repo"
+    url: "https://github.com/PurpleMaia/bill-scraper"
+  - label: "Public Version Prototype Repo"
     url: "https://github.com/PMF-pohai/leg-tracker"
 ---
 
@@ -36,7 +36,6 @@ The kanban format is unique among 80+ existing legislative trackers. Instead of 
 - **AI bill classification** — automatically identifies food-related bills from the full session docket and categorizes them into legislative stages: Introduce → Committee → Deferred → Crossover → Past Legislature → Governor's Desk
 - **Kanban board interface** — visual board where bill cards move through columns matching real legislative stages, unique among 80+ competing trackers
 - **Nightly scraper** — automated scraping from capitol.hawaii.gov keeps bill statuses current without manual checking
-- **Open States API integration** — extends data coverage via the Reynolds Journalism Institute's Open States project, adding voting records, bill versions, and legislator information across all 50 states
 - **Manual override** — users can add or remove bills from the board if the AI classification misses or misidentifies a bill
 
 ## Phase

@@ -12,9 +12,6 @@ order: 2
 team: ["David Pickett", "Joe Baranowski"]
 partners: ["Liliuokalani Trust (potential)"]
 links:
-  - label: "Preview App"
-    url: "https://preview-lt-app-dev.sandbox.purplemaia.org"
-    highlight: true
   - label: "App Template Repo"
     url: "https://github.com/PurpleMaia/lt-example-app-template"
   - label: "Permaship Test"

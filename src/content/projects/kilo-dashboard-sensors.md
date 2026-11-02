@@ -12,17 +12,16 @@ order: 6
 team: ["Keoni DeFranco", "Jaden Kapali", "Ikaika", "Raul"]
 partners: ["Polipoli Farms", "Nation of Hawaiʻi"]
 links:
-  - label: "Field Pi Init"
-    url: "https://github.com/PurpleMaia/kilo-field-pi-init"
-  - label: "Kilo Dashboard"
+  - label: "Live Prototype"
+    url: "https://kilo-dashboard.sandbox.purplemaia.org/"
+    highlight: true
+  - label: "Kilo Dashboard Repo"
     url: "https://github.com/PurpleMaia/kilo-dashboard"
-  - label: "Adafruit Feed"
-    url: "https://io.adafruit.com/keoni_defranco/feeds/kilo-weather-station.polipoli-farms-weather-station-waiehu-maui"
 ---
 
 ## Overview
 
-The Kilo Dashboard Sensors/Hardware project is the physical infrastructure layer of the Kilo ecosystem. Where the Kilo Dashboard software displays data and the Kilo Tracker app captures human observations, this project handles the machines in the field — Raspberry Pis running weather stations, sensor arrays collecting environmental data, and the pipeline that moves readings from Adafruit sensors into a local database.
+The Kilo Dashboard Sensors/Hardware project is the physical infrastructure layer of the Kilo ecosystem. Where the Kilo Dashboard software displays data and the Hākilo app captures human observations, this project handles the machines in the field — Raspberry Pis running weather stations, sensor arrays collecting environmental data, and the pipeline that moves readings from Adafruit sensors into a local database.
 
 The team has deployed weather stations at Polipoli Farms (Waiehu, Maui) and with the Nation of Hawaiʻi, using Raspberry Pis connected to Adafruit sensors feeding data to Adafruit IO. Jaden demonstrated running the full Kilo Dashboard application locally on a Pi 5 using Dokku — meaning the data collection, database, and dashboard can all live on a single field device with no cloud dependency.
 
@@ -37,7 +36,6 @@ The project also connects to the broader Our Tools, Our Hardware vision — thes
 - **Local-first architecture** — Dokku + containerized Postgres on Pi 5, no cloud dependency required
 - **Data sovereignty refactor** — "field" branch of Kilo Dashboard designed for local-only access
 - **Tailscale remote access** — secure access to field devices without public internet exposure
-- **Startup scripts** — kilo-field-pi-init repo for bootstrapping new field Raspberry Pis
 
 ## Phase
 

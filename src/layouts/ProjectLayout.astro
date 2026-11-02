@@ -10,7 +10,7 @@ interface Props {
 }
 
 const { project, next } = Astro.props;
-const { title, tagline, description, status, stack, year, coverImage, images, videoUrl, team, partners, links } = project.data;
+const { title, tagline, description, status, stack, year, coverImage, images, screenshots, videoUrl, team, partners, links } = project.data;
 
 const layer = stackLayers.find(l => l.key === stack);
 const primaryLink = links?.find(l => l.highlight);
@@ -99,6 +99,19 @@ const meta = [
           <article class="prose-site">
             <slot />
           </article>
+
+          {screenshots && screenshots.length > 0 && (
+            <div class="mt-16">
+              <h2 class="caps text-graphite mb-4">Screens</h2>
+              <ul class="flex gap-4 sm:gap-6 overflow-x-auto snap-x snap-mandatory pb-4">
+                {screenshots.map(shot => (
+                  <li class="shrink-0 w-[44%] sm:w-[30%] snap-start">
+                    <img src={withBase(shot.src)} alt={shot.alt} width="600" height="1300" class="w-full h-auto rounded-2xl border border-[#ddd]" loading="lazy" decoding="async" />
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )}
 
           {images && images.length > 0 && (
             <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-8 mt-16">
